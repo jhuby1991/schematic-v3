@@ -1,0 +1,39 @@
+/**
+ * Design tokens.
+ *
+ * Chrome is deliberately quiet: on a drawing tool the schematic should be the
+ * loudest thing on screen. Cable colours are NOT tokens — they carry meaning
+ * (green is CAT5/6, red is DALI) and live in the data model, so a theme change
+ * can never alter what a drawing says.
+ */
+:root {
+  color-scheme: light;
+
+  --ink: #1c1c1c;
+  --ink-muted: #5b6166;
+  --line: #d7dbde;
+  --line-strong: #b9c0c5;
+  --surface: #ffffff;
+  --surface-sunken: #f2f4f5;
+  --surface-raised: #ffffff;
+
+  --accent: #2f6f8f;
+  --accent-strong: #245771;
+  --accent-wash: rgba(47, 111, 143, 0.12);
+  --danger: #b3261e;
+  --warning: #9a5b00;
+  --success: #1e6f42;
+
+  --grid-line: #e6e9eb;
+  --grid-line-strong: #d5dade;
+
+  --radius: 6px;
+  --radius-lg: 10px;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-size: 14px;
+
+  --sidebar-width: 248px;
+  --toolbar-height: 48px;
+}

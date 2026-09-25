@@ -1,0 +1,137 @@
+/**
+ * Print styles.
+ *
+ * The printed sheet is built from the model by src/render/print.ts, so this
+ * file only has to hide the application chrome and style the sheet. It does
+ * not have to fight inline styles or re-position anything, because the
+ * renderer never sets appearance inline.
+ */
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+
+@media print {
+  html,
+  body {
+    height: auto;
+    overflow: visible;
+    background: #fff;
+  }
+
+  /* Everything that is not the sheet. */
+  #app {
+    display: none !important;
+  }
+
+  .sc-toast-container,
+  .sc-empty-state {
+    display: none !important;
+  }
+
+  .sc-print-sheet {
+    display: flex !important;
+    flex-direction: column;
+    /* One sheet per page. */
+    break-after: page;
+    height: 100%;
+  }
+
+  .sc-print-sheet:last-of-type {
+    break-after: auto;
+  }
+
+  .sc-print-canvas {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  /* Ink, not screen colour. */
+  .sc-item-image {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .sc-output-label {
+    color: #000;
+    /* On screen a white plate keeps labels legible over the grid. On paper it
+       masks the leader lines and the label above, so it goes. */
+    background: transparent;
+  }
+
+  .sc-output-label-lines line {
+    stroke: #000;
+    stroke-width: 1.2;
+  }
+
+  .sc-text-label[data-background='true'] {
+    background: transparent;
+  }
+
+  .sc-connection {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ---------- Title block ---------- */
+  .sc-print-title-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+    border-top: 0.5pt solid #999;
+    padding-top: 4mm;
+    margin-top: 4mm;
+    font-size: 7.5pt;
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  .sc-print-title-block h2 {
+    font-size: 8pt;
+    margin: 0 0 1.5mm;
+  }
+
+  .sc-print-notes ol {
+    margin: 0;
+    padding-left: 4mm;
+  }
+
+  .sc-print-notes li {
+    margin-bottom: 0.8mm;
+  }
+
+  .sc-print-title-block dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1mm 3mm;
+    margin: 0;
+  }
+
+  .sc-print-title-block dt {
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .sc-print-title-block dd {
+    margin: 0;
+  }
+
+  .sc-print-legend div {
+    display: flex;
+    align-items: center;
+    gap: 2mm;
+    margin-bottom: 0.8mm;
+    white-space: nowrap;
+  }
+
+  .sc-print-legend span {
+    width: 8mm;
+    border-bottom-width: 1pt;
+    display: inline-block;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

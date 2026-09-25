@@ -1,0 +1,397 @@
+/**
+ * Screen styles.
+ *
+ * Every class here must exist in src/render/classes.ts — enforced by
+ * tests/unit/classes.test.ts. Renaming a class in one place and not the other
+ * is a test failure, not a silent loss of styling.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font);
+  font-size: var(--font-size);
+  color: var(--ink);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ---------- Toolbar ---------- */
+.sc-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--toolbar-height);
+  padding: 0 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.sc-toolbar button,
+.sc-toolbar select {
+  font: inherit;
+  font-size: 0.86rem;
+  padding: 6px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.sc-toolbar button:hover:not(:disabled) {
+  background: var(--surface-sunken);
+}
+
+.sc-toolbar button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.sc-toolbar button[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.sc-toolbar-spacer {
+  flex: 1;
+}
+
+/* ---------- Layout ---------- */
+.sc-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.sc-sidebar h2 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  margin: 0 0 10px;
+}
+
+.sc-sidebar label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-bottom: 3px;
+}
+
+.sc-sidebar input {
+  font: inherit;
+  font-size: 0.85rem;
+  width: 100%;
+  padding: 6px 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.sc-sidebar input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+/* ---------- Palette ---------- */
+.sc-palette {
+  margin-top: 20px;
+}
+
+.sc-palette-group {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.sc-palette-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--surface);
+  border: 0;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.sc-palette-group-header:hover {
+  background: var(--surface-sunken);
+}
+
+.sc-palette-group-header[aria-expanded='false'] + div {
+  display: none;
+}
+
+.sc-palette-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 0.83rem;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  cursor: grab;
+}
+
+.sc-palette-item:hover {
+  background: var(--accent-wash);
+}
+
+.sc-palette-item img {
+  width: 30px;
+  height: 22px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* ---------- Canvas ---------- */
+.sc-canvas-wrapper {
+  flex: 1;
+  overflow: auto;
+  background: var(--surface-sunken);
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/*
+ * The canvas is exactly the printable drawing area, sized from the same
+ * constants the print path uses. There is no off-page region to drop things
+ * into, and at 100% zoom what you see is the size it prints.
+ */
+.sc-canvas {
+  position: relative;
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+  transform-origin: 0 0;
+}
+
+.sc-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------- Items ---------- */
+.sc-item {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+}
+
+.sc-item:focus-visible,
+.sc-item.is-selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.sc-item[data-asset-missing='true'] {
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  color: var(--danger);
+  border: 1px dashed var(--danger);
+  background: rgba(179, 38, 30, 0.06);
+}
+
+.sc-item-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  text-align: center;
+  color: var(--danger);
+}
+
+.sc-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+/* ---------- Circuit labels ---------- */
+.sc-output-label {
+  position: absolute;
+  font-size: 8px;
+  /* line-height 1 and no vertical padding: the box is exactly 8px, which fits
+     inside the per-circuit pitch. See src/model/labels.ts. */
+  line-height: 1;
+  padding: 0 2px;
+  white-space: nowrap;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.sc-output-label-lines {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sc-output-label-lines line {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+/* ---------- Text labels ---------- */
+.sc-text-label {
+  position: absolute;
+  padding: 2px 4px;
+  border-radius: 2px;
+  white-space: pre;
+  cursor: grab;
+}
+
+.sc-text-label[data-background='true'] {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.sc-text-label[data-bold='true'] {
+  font-weight: 700;
+}
+
+.sc-text-label[data-underline='true'] {
+  text-decoration: underline;
+}
+
+.sc-text-label:focus-visible,
+.sc-text-label.is-selected {
+  outline: 2px solid var(--accent);
+}
+
+/* ---------- Connections ---------- */
+.sc-connection-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sc-connection {
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.sc-connection.is-selected {
+  stroke-width: 4;
+}
+
+/* ---------- Empty state ---------- */
+.sc-empty-state {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  max-width: 280px;
+  padding: 14px 16px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  pointer-events: none;
+}
+
+.sc-empty-state strong {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+/* ---------- Toasts ---------- */
+.sc-toast-container {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.sc-toast {
+  padding: 10px 18px;
+  border-radius: var(--radius-lg);
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.88rem;
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  max-width: min(90vw, 460px);
+}
+
+.sc-toast[data-tone='error'] {
+  background: var(--danger);
+}
+.sc-toast[data-tone='warning'] {
+  background: var(--warning);
+}
+.sc-toast[data-tone='success'] {
+  background: var(--success);
+}
+
+.sc-toast button {
+  font: inherit;
+  margin-left: 12px;
+  padding: 3px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* The print sheet only exists while printing. */
+.sc-print-sheet {
+  display: none;
+}
