@@ -1,5 +1,8 @@
 node_modules/
 dist/
+# Generated wrapper for publishing a preview build; references content-hashed
+# filenames from dist/, so it is regenerated rather than committed.
+preview.html
 test-results/
 playwright-report/
 *.local
